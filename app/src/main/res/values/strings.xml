@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Tugas1_JuliarmanUmar_152267</string>
+    <string name="login">MASUK</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="laki_laki">Laki-laki</string>
+    <string name="perempuan">Perempuan</string>
+    <string name="telepon">Telepon</string>
+    <string name="email">Email</string>
+    <string name="nama_mahasiswa">Nama Mahasiswa</string>
+    <string name="nim">NIM</string>
+    <string name="hobby">Hobby</string>
+    <string name="listeing_music">Listening Music  </string>
+    <string name="reading">Reading  </string>
+    <string name="googling">Googling  </string>
+    <string name="simpan">Simpan</string>
+    <string name="clear">Clear</string>
+</resources>
