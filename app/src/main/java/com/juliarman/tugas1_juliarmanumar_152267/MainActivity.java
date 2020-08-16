@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         edtUsername = findViewById(R.id.edt_username);
         edtPassword = findViewById(R.id.edt_password);
         btnLogin    = findViewById(R.id.btn_login);
+
+
         edtUsername.setText("juliarman");
         edtPassword.setText("152267");
 
