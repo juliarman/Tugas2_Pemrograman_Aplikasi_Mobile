@@ -16,8 +16,54 @@
             android:id="@+id/tv_data_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
             android:ems="10"
+            android:padding="3dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_data_mhs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ems="10"
+            android:padding="3dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_data_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ems="10"
+            android:padding="3dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_data_tlp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ems="10"
+            android:padding="3dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_data_jkl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ems="10"
+            android:padding="3dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_data_hobi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ems="10"
+            android:padding="3dp"
             android:textSize="20sp"/>
 
     </LinearLayout>

@@ -7,10 +7,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,18 +22,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.File;
-import java.io.FileNotFoundException;
 
-import java.io.PrintWriter;
-import java.util.Scanner;
 
 public class FormPendaftaran extends AppCompatActivity implements View.OnClickListener {
 
     private static final int PERMISSION_REQUEST_CODE = 1 ;
     AlertDialog dialog;
     String fileName;
-    TextView tvDataView;
+    TextView tvDataView, tvDataMhs, tvDataEmail, tvDataTelp, tvDataJkl, tvDataHobi;
     EditText edtNim, edtMhs, edtEmail, edtTlp;
     RadioGroup rgJkl;
     RadioButton rbMale, rbFemale;
@@ -40,6 +38,13 @@ public class FormPendaftaran extends AppCompatActivity implements View.OnClickLi
 
     String txtjkl;
     String  cbChoose = "";
+
+    SQLiteDatabase database;
+
+    public String txtNim;
+    public String txtMhs ;
+    public String txtEmail;
+    public String txtTelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,10 @@ public class FormPendaftaran extends AppCompatActivity implements View.OnClickLi
         btnSave = findViewById(R.id.btn_save);
         btnClear = findViewById(R.id.btn_clear);
         btnView = findViewById(R.id.btn_view);
+
+
+        database = openOrCreateDatabase("siakaDB", Context.MODE_PRIVATE, null);
+        database.execSQL("create table if not exists tbl_mhs(nim varchar, nama varchar, email varchar, telpon varchar, jenkel varchar, hobi varchar);");
 
 
         if (Build.VERSION.SDK_INT >= 23){
@@ -140,10 +149,10 @@ public class FormPendaftaran extends AppCompatActivity implements View.OnClickLi
 
     public void save(){
 
-        String txtNim = edtNim.getText().toString();
-        String txtMhs = edtMhs.getText().toString();
-        String txtEmail = edtEmail.getText().toString();
-        String txtTelp = edtTlp.getText().toString();
+         txtNim = edtNim.getText().toString();
+         txtMhs = edtMhs.getText().toString();
+         txtEmail = edtEmail.getText().toString();
+         txtTelp = edtTlp.getText().toString();
 
         int rgChooseJkl = rgJkl.getCheckedRadioButtonId();
 
@@ -176,7 +185,7 @@ public class FormPendaftaran extends AppCompatActivity implements View.OnClickLi
         }
 
 
-        fileName = Environment.getExternalStorageDirectory()+"/juliarman_152267.txt";
+       /* fileName = Environment.getExternalStorageDirectory()+"/juliarmanumar_152267.txt";
         dialog = new AlertDialog.Builder(this).create();
 
         PrintWriter printWriter;
@@ -199,6 +208,18 @@ public class FormPendaftaran extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
+        */
+
+
+       database.execSQL("insert into tbl_mhs values('"+txtNim+"','"+txtMhs+"','"+txtEmail+"','"+txtTelp+"','"+txtjkl+"','"+cbChoose+"');");
+       dialog = new AlertDialog.Builder(this).create();
+       dialog.setMessage("Data berhasil tersimpan!");
+       dialog.show();
+
+
+       //Toast.makeText(this, "Berhasil Tersimpan", Toast.LENGTH_SHORT).show();
+
+
     }
 
     public void clear(){
@@ -217,9 +238,14 @@ public class FormPendaftaran extends AppCompatActivity implements View.OnClickLi
          setContentView(R.layout.activity_view);
 
          tvDataView = findViewById(R.id.tv_data_view);
+         tvDataMhs = findViewById(R.id.tv_data_mhs);
+         tvDataEmail = findViewById(R.id.tv_data_email);
+         tvDataTelp = findViewById(R.id.tv_data_tlp);
+         tvDataJkl = findViewById(R.id.tv_data_jkl);
+         tvDataHobi = findViewById(R.id.tv_data_hobi);
 
 
-         File fileInput = new File(fileName);
+         /*File fileInput = new File(fileName);
          Scanner scanner;
          StringBuilder stringBuilder = new StringBuilder();
          try {
@@ -234,9 +260,39 @@ public class FormPendaftaran extends AppCompatActivity implements View.OnClickLi
 
                tvDataView.setText(stringBuilder.toString());
 
-
            } catch (Exception e) {
              e.printStackTrace();
+        }
+          */
+
+
+        Cursor cursorDb = database.rawQuery("select * from tbl_mhs ", null);
+
+        if (cursorDb.moveToFirst()){
+
+            do {
+                String colNim = cursorDb.getString(0);
+                String colMhs = cursorDb.getString(1);
+                String colEmail = cursorDb.getString(2);
+                String colTelp = cursorDb.getString(3);
+                String colJkl = cursorDb.getString(4);
+                String colHobi = cursorDb.getString(5);
+
+                tvDataView.setText(colNim);
+                tvDataMhs.setText(colMhs);
+                tvDataEmail.setText(colEmail);
+                tvDataTelp.setText(colTelp);
+                tvDataJkl.setText(colJkl);
+                tvDataHobi.setText(colHobi);
+
+
+                //Toast.makeText(this, "NIM: "+cursorDb.getString(0) +"\nNama: "+cursorDb.getString(1), Toast.LENGTH_SHORT).show();
+            } while (cursorDb.moveToNext());
+
+        }
+        else {
+
+            Toast.makeText(this, "Data"+txtNim+"Data tidak ditemukan", Toast.LENGTH_SHORT).show();
         }
     }
 }
